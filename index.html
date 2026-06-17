@@ -1,0 +1,375 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>GAN-DexGrasp</title>
+
+  <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro"
+        rel="stylesheet">
+
+  <link rel="stylesheet" href="./static/css/bulma.min.css">
+  <link rel="stylesheet" href="./static/css/bulma-carousel.min.css">
+  <link rel="stylesheet" href="./static/css/bulma-slider.min.css">
+  <link rel="stylesheet"
+        href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
+  <link rel="stylesheet" href="./static/css/index.css">
+  <!-- <link rel="icon" href="./static/images/favicon.svg"> -->
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script defer src="./static/js/fontawesome.all.min.js"></script>
+  <script src="./static/js/bulma-carousel.min.js"></script>
+  <script src="./static/js/bulma-slider.min.js"></script>
+  <script src="./static/js/index.js"></script>
+
+  <!-- MathJax -->
+  <script>
+    window.MathJax = {
+      tex: { inlineMath: [['$', '$'], ['\\(', '\\)']] }
+    };
+  </script>
+  <script id="MathJax-script" async
+    src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
+  </script>
+
+  <!-- visitor statistics -->
+  <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  <!-- model-viewer -->
+  <script type="module" src="https://ajax.googleapis.com/ajax/libs/model-viewer/3.5.0/model-viewer.min.js"></script>
+</head>
+<body>
+
+<section class="hero">
+  <div class="hero-body">
+    <div class="container is-max-desktop">
+      <div class="columns is-centered">
+        <div class="column has-text-centered">
+          <h1 class="title is-1 publication-title">
+            GAN-DexGrasp: Enhancing Dexterous Grasping via Generative Adversarial Object Synthesis
+          </h1>
+          
+          <div class="is-size-5 publication-authors">
+            <span class="author-block">
+              Anonymous Authors
+            </span>
+          </div>
+     
+          <div class="column has-text-centered">
+            <div class="publication-links">
+              <!-- Arxiv Link. -->
+              <span class="link-block">
+                <a href="./static/assets/paper_final_v3.pdf"
+                  class="external-link button is-normal is-rounded is-dark">
+                    <span class="icon">
+                      <i class="fas fa-file-pdf"></i>
+                    </span>
+                    <span>Paper</span>
+                </a>
+              </span>
+              <!-- Appendix Link. -->
+              <span class="link-block">
+                <a href="./static/assets/supp_v1.pdf"
+                   class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                      <i class="fas fa-file-pdf"></i>
+                  </span>
+                  <span>Appendix</span>
+                </a>
+              </span>
+              <!-- Code Link. -->
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="hero teaser">
+  <div class="column has-text-centered", style="font-size: 24px;">
+    GAN-DexGrasp \(=\) Iterative Self-Improving Framework for Dexterous Grasping
+  </div>
+  <div class="container is-max-desktop">
+    <div class="hero-body">
+      <video id="teaser" loop playsinline height="100%" controls class="video-with-border">
+        <source src="./static/assets/video_v7.mp4" type="video/mp4">
+      </video>      
+    </div>
+  </div>
+</section>
+
+<section class="teaser image">
+  <div class="container is-max-desktop">
+    <div class="hero-body">
+      <img src="./static/assets/teaser.png" alt="Teaser Image" style="width:100%; height:auto;">
+    </div>
+  </div>
+</section>
+
+
+<section class="section">
+  <div class="container is-max-desktop">
+    <!-- Abstract. -->
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-3">Abstract</h2>
+        <div class="content has-text-justified">
+          Robust dexterous grasping requires models to generalize beyond the object geometries observed during training. However, existing learning-based methods often fail on rare or geometrically challenging objects that expose previously unseen failure modes. We propose \textbf{GAN-DexGrasp}, an iterative self-improving framework that continuously discovers and learns from such failures through adversarial object generation. Our method learns a rollout-based performance predictor and uses it to synthesize challenging yet realistic objects via diffusion-regularized latent optimization. These objects are then used to collect additional grasp data and retrain the grasping model, progressively improving robustness and generalization. Experiments demonstrate consistent gains over random object generation, dataset sampling, latent-space deformation, and direct 3D-space deformation. The results suggest that adversarial object generation is an effective and scalable strategy for improving dexterous grasping.
+        </div>
+      </div>
+    </div>
+    <!--/ Abstract. -->
+</section>
+
+<section class="pipeline">
+  <h2 class="title is-3 has-text-centered">Method Overview</h2>
+  <div class="container is-max-desktop">
+    <div class="hero-body" style="padding-top: 10px; padding-bottom: 10px;">
+      <img src="./static/assets/pipeline.png" alt="Teaser Image" style="width:100%; height:auto;">
+      <p>
+        Overview of GAN-DexGrasp. The proposed framework iteratively trains a rollout-based performance predictor, generates challenging in-distribution adversarial objects, collects RL-based grasping data, and trains the grasping model. The right panel summarizes the average success rates across embodiments, demonstrating that our method outperforms all other baselines.
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- ========================= -->
+<!-- Evaluation Grasps -->
+<!-- ========================= -->
+ <section class="section">
+  <div class="container is-max-desktop">
+    <div class="columns is-centered">
+      <div class="column">
+        <h2 class="title is-3 has-text-centered">Simulation: Grasps on Evaluation Dataset</h2>
+      </div>
+    </div>
+
+    <div class="columns is-centered has-text-centered">
+      <!-- Barrett -->
+      <div class="column is-one-quarter" style="display: flex; flex-direction: column; align-items: center;">
+        <model-viewer
+          id="uncond-viewer1"
+          src="./static/assets/everyday/airplane/0.glb"
+          alt="Everyday Grasp"
+          ar camera-controls auto-rotate
+          style="width: 200px; height: 200px; border: 3px solid #66c0ff; border-radius: 15px;">
+        </model-viewer>
+      </div>
+
+      <!-- Control Panel -->
+      <div class="column is-one-quarter" style="text-align: center;">
+        <label for="uncond-object" style="font-size: 20px; font-weight: bold;">Object Name</label>
+        <select id="uncond-object" style="width: 200px; margin-top: 10px;">
+          <option value="airplane">airplane</option>
+          <option value="toy bear">toy bear</option>
+          <option value="bird">bird</option>
+          <option value="bowl">bowl</option>
+          <option value="calculator">calculator</option>
+          <!-- <option value="contactdb+water_bottle">contactdb+water_bottle</option>
+          <option value="ycb+baseball">ycb+baseball</option>
+          <option value="ycb+pear">ycb+pear</option>
+          <option value="ycb+potted_meat_can">ycb+potted_meat_can</option>
+          <option value="ycb+tomato_soup_can">ycb+tomato_soup_can</option> -->
+        </select>
+
+        <div style="margin-top: 20px;">
+          <div style="font-size: 20px; font-weight: bold;">Grasp ID: <span id="uncond-id-label">0</span></div>
+          <input type="range" id="uncond-id" min="0" max="9" value="0" style="width: 200px;">
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+  const uncondViewers = [
+    document.getElementById("uncond-viewer1"),
+  ];
+  const uncondObject = document.getElementById("uncond-object");
+  const uncondSlider = document.getElementById("uncond-id");
+  const uncondLabel = document.getElementById("uncond-id-label");
+
+  function updateUncond() {
+    const obj = uncondObject.value;
+    const gid = uncondSlider.value;
+    uncondLabel.textContent = gid;
+    uncondViewers[0].src = `./static/assets/everyday/${obj}/${gid}.glb`;
+  }
+  uncondObject.addEventListener("change", updateUncond);
+  uncondSlider.addEventListener("input", updateUncond);
+</script>
+
+<!-- ========================= -->
+<!-- Adversarial Grasps -->
+<!-- ========================= -->
+<section class="section">
+  <div class="container is-max-desktop">
+    <div class="columns is-centered">
+      <div class="column">
+        <h2 class="title is-3 has-text-centered">Simulation: Grasps on Adversarial Objects</h2>
+      </div>
+    </div>
+
+    <div class="columns is-centered has-text-centered">
+      <!-- Ours -->
+      <div class="column is-one-quarter" style="display: flex; flex-direction: column; align-items: center;">
+        <model-viewer
+          id="cond-viewer1"
+          src="./static/assets/adversarial/ours/deformed_0/0.glb"
+          alt="Ours"
+          ar camera-controls auto-rotate
+          style="width: 200px; height: 200px; border: 3px solid #66c0ff; border-radius: 15px;">
+        </model-viewer>
+        <p style="font-size: 20px; font-weight: bold; color: #D86ECC;">Ours</p>
+      </div>
+
+      <!-- Original Grasping Model -->
+      <div class="column is-one-quarter" style="display: flex; flex-direction: column; align-items: center;">
+        <model-viewer
+          id="cond-viewer2"
+          src="./static/assets/adversarial/original/deformed_0/0.glb"
+          alt="Original Grasping Model"
+          ar camera-controls auto-rotate
+          style="width: 200px; height: 200px; border: 3px solid #66c0ff; border-radius: 15px;">
+        </model-viewer>
+        <p style="font-size: 20px; font-weight: bold; color: #FFC000;">
+          Original Grasping Model
+        </p>
+      </div>
+
+      <!-- Control Panel -->
+      <div class="column is-one-quarter" style="text-align: center;">
+        <label for="cond-object" style="font-size: 20px; font-weight: bold;">Object ID</label>
+        <select id="cond-object" style="width: 200px; margin-top: 10px;">
+          <option value="0">0</option>
+          <option value="1">1</option>
+          <option value="2">2</option>
+          <option value="3">3</option>
+          <option value="4">4</option>
+          <option value="5">5</option>
+          <option value="6">6</option>
+          <option value="7">7</option>
+          <option value="8">8</option>
+          <option value="9">9</option>
+        </select>
+
+        <div style="margin-top: 20px;">
+          <div style="font-size: 20px; font-weight: bold;">
+            Grasp ID: <span id="cond-id-label">0</span>
+          </div>
+          <input
+            type="range"
+            id="cond-id"
+            min="0"
+            max="9"
+            value="0"
+            style="width: 200px;"
+          >
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+  const condViewerOurs = document.getElementById("cond-viewer1");
+  const condViewerOriginal = document.getElementById("cond-viewer2");
+  const condObject = document.getElementById("cond-object");
+  const condSlider = document.getElementById("cond-id");
+  const condLabel = document.getElementById("cond-id-label");
+
+  // If each adversarial object has a different number of grasps,
+  // modify this list accordingly.
+  // For example, object 0 has 10 grasps, object 1 has 8 grasps, etc.
+  const graspCounts = [10, 10, 10, 10, 10, 10, 10, 10, 10, 10];
+
+  function updateCond() {
+    const objIdx = parseInt(condObject.value, 10);
+    const objName = `deformed_${objIdx}`;
+
+    const maxGraspId = graspCounts[objIdx] - 1;
+    condSlider.max = maxGraspId;
+
+    if (parseInt(condSlider.value, 10) > maxGraspId) {
+      condSlider.value = 0;
+    }
+
+    const gid = condSlider.value;
+    condLabel.textContent = gid;
+
+    condViewerOurs.src = `./static/assets/adversarial/ours/${objName}/${gid}.glb`;
+    condViewerOriginal.src = `./static/assets/adversarial/original/${objName}/${gid}.glb`;
+  }
+
+  condObject.addEventListener("change", updateCond);
+  condSlider.addEventListener("input", updateCond);
+</script>
+
+<section class="section">
+  <div class="container is-max-desktop">
+    <!-- Real World: everyday -->
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-3">Real-world: Grasps on Everyday Objects</h2>
+        <div class="content has-text-centered">
+
+          <!-- <h3 style="margin-bottom: 8px; font-size: 1.2rem; color: #444;">
+            Real World: Grasps on Everyday Objects
+          </h3> -->
+          
+          <div style="margin-bottom: 20px;">
+            <video autoplay muted loop playsinline style="width:100%; height:auto;">
+              <source src="./static/assets/real_everyday.mp4" type="video/mp4">
+            </video>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container is-max-desktop">
+    <!-- Real World: adversarial -->
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-3">Real-world: Grasps on Adversarial Objects</h2>
+        <div class="content has-text-centered">
+
+        <div class="content has-text-centered">
+
+          <!-- <h3 style="margin-bottom: 8px; font-size: 1.2rem; color: #444;">
+            Real World: Grasps on Adversarial Objects
+          </h3> -->
+          
+          <div style="margin-bottom: 20px;">
+            <video autoplay muted loop playsinline style="width:100%; height:auto;">
+              <source src="./static/assets/real_adversarial.mp4" type="video/mp4">
+            </video>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="columns is-centered">
+    <div class="column is-8 has-text-centered">
+      <div class="content">
+        <p>
+          This website is designed based on 
+          <a href="https://github.com/nerfies/nerfies.github.io">Nerfies</a>.
+        </p>
+      </div>
+    </div>
+  </div>
+</footer>
+
+
+</body>
+</html>
